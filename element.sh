@@ -55,10 +55,12 @@ PARSE_INPUT() {
 if [[ -z $1 ]]
 then
 # does this need to be any element, symbol or number or only element's name?
-  echo "Please provide an element as an argument"
+  echo "Please provide an element as an argument."
   # read INPUT_ELEMENT
   # PARSE_INPUT $INPUT_ELEMENT
+
 
 else
   echo "$($echo PARSE_INPUT $1)"
 fi
+
