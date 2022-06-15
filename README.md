@@ -1,0 +1,1 @@
+Learning git, github, relational databases, and bash.
