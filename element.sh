@@ -27,8 +27,20 @@ PARSE_INPUT() {
   # if characters are <= 2 $1 = symbol else $1 = name
     if [[ ${#1} -le 2 ]]
     then
-    echo "Symbol: $1"
+    # symbol lookup
+    # echo "Symbol: $1"
 
+    echo $($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius from elements join properties using(atomic_number) join types using(type_id) WHERE symbol = '$1' ") | while read Q_ATOMIC_NUM BAR Q_NAME BAR Q_SYMBOL BAR Q_TYPE BAR Q_MASS BAR Q_MELT_C BAR Q_BOIL_C
+    do
+      if ! [[ -z $Q_NAME ]]
+      then
+        echo "The element with atomic number $Q_ATOMIC_NUM is $Q_NAME ($Q_SYMBOL). It's a $Q_TYPE, with a mass of $Q_MASS amu. $Q_NAME has a melting point of $Q_MELT_C celsius and a boiling point of $Q_BOIL_C celsius."
+      else
+        echo "I could not find that element in the database."
+      fi
+    done
+
+    # name lookup
     else
     echo "Name: $1"
     fi
