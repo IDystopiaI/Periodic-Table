@@ -3,12 +3,13 @@
 PSQL="psql -X --username=freecodecamp --dbname=periodic_table --tuples-only -c"
 
 
+
 # This function identifies if input is atomic number, symbol or name
 PARSE_INPUT() {
   if [[ $1 =~ ^[0-9]{1,2}$ ]]
   then
     # Look-up element by atomic number
-    echo $($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius from elements join properties using(atomic_number) join types using(type_id) WHERE atomic_number = $1 ") | while read Q_ATOMIC_NUM BAR Q_NAME BAR Q_SYMBOL BAR Q_TYPE BAR Q_MASS BAR Q_MELT_C BAR Q_BOIL_C
+    echo $($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements INNER JOIN properties USING(atomic_number) INNER JOIN types USING(type_id) WHERE atomic_number = $1 ") | while read Q_ATOMIC_NUM BAR Q_NAME BAR Q_SYMBOL BAR Q_TYPE BAR Q_MASS BAR Q_MELT_C BAR Q_BOIL_C
     do
       if ! [[ -z $Q_NAME ]]
       then
@@ -23,7 +24,7 @@ PARSE_INPUT() {
     if [[ ${#1} -le 2 ]]
     then
       # Look-up by symbol
-      echo $($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius from elements join properties using(atomic_number) join types using(type_id) WHERE symbol = '$1' ") | while read Q_ATOMIC_NUM BAR Q_NAME BAR Q_SYMBOL BAR Q_TYPE BAR Q_MASS BAR Q_MELT_C BAR Q_BOIL_C
+      echo $($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements INNER JOIN properties USING(atomic_number) INNER JOIN types USING(type_id) WHERE symbol = '$1' ") | while read Q_ATOMIC_NUM BAR Q_NAME BAR Q_SYMBOL BAR Q_TYPE BAR Q_MASS BAR Q_MELT_C BAR Q_BOIL_C
     do
       if ! [[ -z $Q_NAME ]]
       then
@@ -35,7 +36,7 @@ PARSE_INPUT() {
 
     else
       # Look-up by name
-      echo $($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius from elements join properties using(atomic_number) join types using(type_id) WHERE name = '$1'") | while read Q_ATOMIC_NUM BAR Q_NAME BAR Q_SYMBOL BAR Q_TYPE BAR Q_MASS BAR Q_MELT_C BAR Q_BOIL_C
+      echo $($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements INNER JOIN properties USING(atomic_number) INNER JOIN types USING(type_id) WHERE name = '$1'") | while read Q_ATOMIC_NUM BAR Q_NAME BAR Q_SYMBOL BAR Q_TYPE BAR Q_MASS BAR Q_MELT_C BAR Q_BOIL_C
     do
       if ! [[ -z $Q_NAME ]]
       then
