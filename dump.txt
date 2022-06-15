@@ -1,0 +1,10 @@
+create dump
+pg_dump -cC --inserts -U freecodecamp periodic_table > periodic_table.sql
+
+recreate db from dump
+psql -U postgres < periodic_table.sql
+
+
+psql --username=freecodecamp --dbname=periodic_table
+
+PSQL="psql -X --username=freecodecamp --dbname=periodic_table --tuples-only -c"

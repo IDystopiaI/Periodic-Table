@@ -1,0 +1,68 @@
+{
+  "database": {
+    "create": "CREATE DATABASE database_name;",
+    "drop": "DROP DATABASE database_name;",
+    "rename": "ALTER DATABASE database_name RENAME TO new_name;"
+  },
+  "table": {
+    "create": "CREATE TABLE table_name();",
+    "drop": "DROP TABLE table_name;",
+    "rename": "ALTER TABLE table_name RENAME TO new_name;"
+  },
+  "row": {
+    "insert": "INSERT INTO table_name(columns) VALUES(values);",
+    "update": "UPDATE table_name SET column_name = new_value WHERE condition;",
+    "delete": "DELETE FROM table_name WHERE condition;"
+  },
+  "column": {
+    "add": "ALTER TABLE table_name ADD COLUMN column_name;",
+    "drop": "ALTER TABLE table_name DROP COLUMN column_name;",
+    "rename": "ALTER TABLE table_name RENAME COLUMN column_name TO new_name;",
+    "primary_key": "ALTER TABLE table_name ADD PRIMARY KEY(column_name);",
+    "foreign_key": "ALTER TABLE table_name ADD FOREIGN KEY(column_name) REFERENCES table_name(column_name);"
+  }
+}
+
+
+TODO:
+convert to json format
+
+ALTER TABLE table_name ALTER COLUMN column_name SET NOT NULL;
+
+unique:
+ALTER TABLE table_name ADD CONSTRAINT arbitrary_name UNIQUE (column_name);
+
+
+set first letter capital guide using INITCAP()
+https://www.postgresqltutorial.com/postgresql-string-functions/postgresql-letter-case-functions/
+UPDATE table_name SET column_name = INITCAP(column_name)
+
+guide remove trailing zeros with :: operator
+https://learnsql.com/cookbook/how-to-remove-trailing-zeros-from-a-decimal-in-postgresql/#:~:text=Use%20the%20%3A%3A%20operator%20to,doesn%27t%20display%20trailing%20zeros
+
+
+
+Case Insensitive select
+SELECT id 
+  FROM groups
+ WHERE LOWER(name)=LOWER('$INPUT_ELEMENT')
+
+
+bash function that checks if input is a 1 or 2 digit number or a string
+PARSE_INPUT() {
+  if [[ $1 =~ ^[0-9]{1,2}$ ]]
+  then
+    echo "number: $1"
+  
+  else
+  # use wc function and get the character count
+  # if characters are <= 2 $1 = symbol else $1 = name
+    if [[ ${#1} -le 2 ]]
+    then
+    echo "short string: $1"
+
+    else
+    echo "long string: $1"
+    fi
+  fi
+}
